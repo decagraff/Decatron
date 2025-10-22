@@ -1,0 +1,112 @@
+@page
+@model IndexModel
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Decatron - Bot de Twitch profesional y modular. Gestiona tu canal con herramientas poderosas." />
+    <meta name="theme-color" content="#7c3aed" />
+    <title>Decatron - Bot de Twitch Profesional</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/css/base.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="brand-icon">⚡</span>Decatron
+        </a>
+        <div class="navbar-controls">
+            <button id="theme-toggle" class="theme-toggle" title="Cambiar tema" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Sección principal">
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenido a Decatron</h1>
+            <p class="hero-subtitle">Tu bot de Twitch profesional y modular. Gestiona tu canal con herramientas poderosas y fáciles de usar.</p>
+            <a href="/login" class="btn btn-primary btn-lg" aria-label="Ir a iniciar sesión">
+                <span class="btn-icon">🔐</span>
+                <span class="btn-text">Iniciar Sesión</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" aria-label="Características principales">
+        <div class="features-wrapper">
+            <div class="section-header">
+                <h2>Características Principales</h2>
+                <p class="section-subtitle">Todo lo que necesitas para gestionar tu comunidad en Twitch</p>
+            </div>
+
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Comandos Personalizados</h3>
+                    <p>Crea y gestiona comandos personalizados sin escribir código. Automatiza tus respuestas favoritas al instante.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Estadísticas en Tiempo Real</h3>
+                    <p>Visualiza métricas de tu canal, seguidores, tiempo de emisión y mucho más en un dashboard intuitivo.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Protección Anti-Spam</h3>
+                    <p>Herramientas avanzadas de moderación para mantener tu chat seguro, limpio y libre de contenido inapropiado.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Clips y Shoutouts</h3>
+                    <p>Gestiona clips automáticos y menciones personalizadas para impulsar y fortalecer tu comunidad.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Temporizadores Avanzados</h3>
+                    <p>Crea temporizadores personalizados para anuncios, rondas de juegos y eventos especiales con total flexibilidad.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Seguridad y Modularidad</h3>
+                    <p>Arquitectura moderna y segura. Tu información está protegida con los mejores estándares de la industria.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" aria-label="Llamada a la acción">
+        <div class="cta-content">
+            <h2>¿Listo para potenciar tu canal?</h2>
+            <p>Únete a miles de streamers que ya confían en Decatron</p>
+            <a href="/login" class="btn btn-primary btn-lg">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-text">Comenzar Ahora</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Decatron. Todos los derechos reservados.</p>
+            <p class="footer-subtitle">Bot de Twitch profesional y modular</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/js/base.js"></script>
+    <script src="~/js/index.js"></script>
+</body>
+</html>

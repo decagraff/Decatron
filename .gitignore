@@ -1,0 +1,57 @@
+﻿# Ignorar los archivos de build y los directorios bin/obj
+/bin/
+/obj/
+
+/# Archivos de usuario de Visual Studio
+.vs/
+.vscode/
+
+# Archivos de usuario de Rider
+.idea/
+
+# Archivos de configuración de Visual Studio Code
+.vscode/
+
+# Archivos generados por Visual Studio para la configuración de la solución
+.vs2019/
+
+# Ignorar las carpetas de paquetes NuGet
+/packages/
+
+# Ignorar archivos de secretos
+/secrets.json
+/appsettings.Secrets.json
+
+# Ignorar archivos de configuración de usuario local de ASP.NET Core
+appsettings.json
+
+# Ignorar archivos específicos de la plataforma
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Archivos de logs
+*.log
+*.dmp
+
+# Ignorar archivos generados por el runtime y SDK de .NET
+dotnet-*.log
+*.dotnet
+
+# Ignorar los archivos temporales de compilación
+# Estos se generan al ejecutar 'dotnet build' o 'dotnet publish'
+publish/
+
+# Archivos y directorios generados por dotnet
+project.lock.json
+project.fragment.lock.json
+
+# Archivos específicos de dependencias de herramientas locales
+# Ignorar Node.js (si usas en tu proyecto)
+node_modules/
+
+# Carpeta de tests (si usas pruebas en tu proyecto, ignóralas aquí)
+test-results/

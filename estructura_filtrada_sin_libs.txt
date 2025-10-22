@@ -1,0 +1,132 @@
+﻿Proyecto: C:\Users\User\Decatron
+
+├── Decatron.Attributes
+│   └── RequirePermissionAttribute.cs
+├── Decatron.Controllers
+│   ├── AuthController.cs
+│   ├── ChannelSwitchController.cs
+│   ├── SettingsController.cs
+│   └── TwitchWebhookController.cs
+├── Decatron.Core
+│   ├── Helpers
+│   │   ├── GameUtils.cs
+│   │   ├── TitleUtils.cs
+│   │   ├── UniqueIdGenerator.cs
+│   │   └── Utils.cs
+│   ├── Interfaces
+│   │   ├── IAuthService.cs
+│   │   ├── IBotService.cs
+│   │   ├── ICommand.cs
+│   │   ├── ISettingsService.cs
+│   │   └── IUserRepository.cs
+│   ├── Models
+│   │   ├── BotTokens.cs
+│   │   ├── Categories.cs
+│   │   ├── ChatMessage.cs
+│   │   ├── CommandSettings.cs
+│   │   ├── GameHistory.cs
+│   │   ├── MicroGameCommands.cs
+│   │   ├── SystemSettings.cs
+│   │   ├── TitleHistory.cs
+│   │   ├── TokenResponse.cs
+│   │   ├── TwitchUser.cs
+│   │   ├── User.cs
+│   │   └── UserChannelPermissions.cs
+│   └── Settings
+│       ├── JwtSettings.cs
+│       └── TwitchSettings.cs
+├── Decatron.Data
+│   ├── DecatronDbContext.cs
+│   └── UserRepository.cs
+├── Decatron.Default
+│   ├── Commands
+│   │   ├── GameCommand.cs
+│   │   ├── GCommand.cs
+│   │   ├── TCommand.cs
+│   │   └── TitleCommand.cs
+│   └── Controllers
+│       ├── GameController.cs
+│       ├── MicroCommandsController.cs
+│       ├── TitleCommandController.cs
+│       └── UserPermissionsController.cs
+├── Decatron.Middleware
+│   └── ChannelAccessMiddleware.cs
+├── Decatron.Services
+│   ├── Commands
+│   │   └── HolaCommand.cs
+│   ├── AuthService.cs
+│   ├── CommandService.cs
+│   ├── ICommandStateService.cs
+│   ├── IMessageSender.cs
+│   ├── MessageSenderService.cs
+│   ├── PermissionService.cs
+│   ├── SettingsService.cs
+│   ├── TwitchApiService.cs
+│   └── TwitchBotService.cs
+├── logs
+├── Migrations
+│   ├── 20251020225104_Initial.cs
+│   ├── 20251020225104_Initial.Designer.cs
+│   ├── 20251021002200_CreateCommandSettingsTable.cs
+│   ├── 20251021002200_CreateCommandSettingsTable.Designer.cs
+│   ├── 20251021052148_AddGameTables.cs
+│   ├── 20251021052148_AddGameTables.Designer.cs
+│   ├── 20251021075511_AddPermissionsTables.cs
+│   ├── 20251021075511_AddPermissionsTables.Designer.cs
+│   └── DecatronDbContextModelSnapshot.cs
+├── Pages
+│   ├── Commands
+│   │   ├── Default.cshtml
+│   │   ├── Default.cshtml.cs
+│   │   ├── MicroCommands.cshtml
+│   │   └── MicroCommands.cshtml.cs
+│   ├── Shared
+│   │   ├── _Layout.cshtml
+│   │   ├── _Layout.cshtml.css
+│   │   └── _ValidationScriptsPartial.cshtml
+│   ├── _ViewImports.cshtml
+│   ├── _ViewStart.cshtml
+│   ├── Dashboard.cshtml
+│   ├── Dashboard.cshtml.cs
+│   ├── Index.cshtml
+│   ├── Index.cshtml.cs
+│   ├── Login.cshtml
+│   ├── Login.cshtml.cs
+│   ├── Settings.cshtml
+│   └── Settings.cshtml.cs
+├── Properties
+│   ├── launchSettings.json
+│   ├── serviceDependencies.json
+│   ├── serviceDependencies.local.json
+│   └── serviceDependencies.local.json.user
+├── wwwroot
+│   ├── css
+│   │   ├── base.css
+│   │   ├── dashboard.css
+│   │   ├── default-commands.css
+│   │   ├── index.css
+│   │   ├── login.css
+│   │   ├── microcommands.css
+│   │   ├── settings.css
+│   │   └── toast-notifications.css
+│   ├── js
+│   │   ├── base.js
+│   │   ├── ChannelSwitcher.js
+│   │   ├── dashboard.js
+│   │   ├── default-commands.js
+│   │   ├── index.js
+│   │   ├── login.js
+│   │   ├── microcommands.js
+│   │   ├── navigation-permissions.js
+│   │   ├── settings.js
+│   │   └── toast-notifications.js
+│   └── favicon.ico
+├── appsettings.Development.json
+├── appsettings.json
+├── appsettings.Secrets.json
+├── Decatron.csproj
+├── Decatron.csproj.user
+├── Decatron.sln
+├── estructura_filtrada_sin_libs.txt
+├── nohup.out
+└── Program.cs

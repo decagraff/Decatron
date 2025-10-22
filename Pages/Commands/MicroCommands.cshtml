@@ -1,0 +1,107 @@
+@page "/commands/microcommands"
+@model Decatron.Default.Pages.MicroCommandsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Micro Comandos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/microcommands.css" />
+}
+
+<div class="microcommands-container">
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h1>Gestión de Micro Comandos</h1>
+        <p class="text-muted">Crea comandos personalizados para cambiar categorías rápidamente usando !g</p>
+    </div>
+
+    <!-- Estado del comando !g -->
+    <div class="flex-between mb-3">
+        <h3>Estado del Comando !g</h3>
+        <span id="command-g-status" class="status-badge">
+            <span class="status-spinner"></span>
+            Verificando...
+        </span>
+    </div>
+
+    <!-- Crear nuevo micro comando -->
+    <div class="create-microcommand-form">
+        <h3>Crear Nuevo Micro Comando</h3>
+        <div class="microcommand-form-grid">
+            <div class="form-group">
+                <label for="new-command">Comando</label>
+                <input 
+                    type="text" 
+                    id="new-command" 
+                    class="form-control" 
+                    placeholder="!lol" 
+                    maxlength="50"
+                />
+                <small class="form-text">Incluye el ! al inicio</small>
+            </div>
+            <div class="form-group">
+                <label for="new-category">Categoría</label>
+                <input 
+                    type="text" 
+                    id="new-category" 
+                    class="form-control" 
+                    placeholder="League of Legends" 
+                    maxlength="255"
+                />
+                <small class="form-text">Nombre completo de la categoría en Twitch</small>
+            </div>
+            <div class="form-actions">
+                <button id="create-microcommand-btn" class="btn btn-primary">
+                    ➕ Crear Comando
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de micro comandos existentes -->
+    <div class="microcommands-list-section">
+        <div class="microcommands-header">
+            <h3>Micro Comandos Existentes</h3>
+            <button id="refresh-microcommands" class="btn btn-secondary btn-sm">
+                🔄 Actualizar
+            </button>
+        </div>
+
+        <div id="microcommands-list" class="microcommands-list">
+            <div class="microcommands-loading">
+                <span class="loading-spinner"></span>
+                Cargando micro comandos...
+            </div>
+        </div>
+    </div>
+
+    <!-- Información sobre uso -->
+    <div class="info-section">
+        <div class="card">
+            <h4>Cómo usar los Micro Comandos</h4>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Crear Comando</strong>
+                    <p>Usa la web o el chat: <code>!g set !lol League of Legends</code></p>
+                </div>
+                <div class="info-item">
+                    <strong>Usar Comando</strong>
+                    <p>Simplemente escribe: <code>!lol</code> y cambiará a League of Legends</p>
+                </div>
+                <div class="info-item">
+                    <strong>Eliminar Comando</strong>
+                    <p>Desde el chat: <code>!g remove !lol</code> o usa el botón eliminar aquí</p>
+                </div>
+                <div class="info-item">
+                    <strong>Listar Comandos</strong>
+                    <p>En el chat: <code>!g list</code> para ver todos los comandos disponibles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/microcommands.js"></script>
+}

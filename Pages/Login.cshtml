@@ -1,0 +1,132 @@
+@page
+@model LoginModel
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Decatron - Inicia sesión con tu cuenta de Twitch" />
+    <meta name="theme-color" content="#7c3aed" />
+    <title>Inicia Sesión - Decatron</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/css/base.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="brand-icon">⚡</span>Decatron
+        </a>
+        <div class="navbar-controls">
+            <button id="theme-toggle" class="theme-toggle" title="Cambiar tema" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-wrapper">
+        <div class="login-container">
+            <!-- Login Box -->
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>Bienvenido a Decatron</h1>
+                    <p class="login-subtitle">Gestiona tu bot de Twitch de forma profesional</p>
+                </div>
+
+                <!-- Error Message -->
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <div class="alert alert-error" role="alert">
+                        <span class="alert-icon">✕</span>
+                        <span class="alert-message">@Model.Error</span>
+                    </div>
+                }
+
+                <!-- Login Content -->
+                <div class="login-content">
+                    <!-- OAuth Section -->
+                    <div class="oauth-section">
+                        <p class="oauth-subtitle">Inicia sesión con tu cuenta de Twitch</p>
+                        
+                        <a href="/api/auth/login" class="oauth-button oauth-twitch" title="Iniciar sesión con Twitch">
+                            <span class="oauth-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11 2H2v20h4v4h2l2-4h4l8-8V2h-3V0h-2v2h-2V0h-2v2zm11 10l-4-4v7h4v-3z"/>
+                                </svg>
+                            </span>
+                            <span class="oauth-text">Iniciar con Twitch</span>
+                        </a>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="info-box">
+                        <h3>¿Por qué Twitch?</h3>
+                        <p>Decatron se integra directamente con tu cuenta de Twitch para un acceso seguro y autorización de permisos necesarios para gestionar tu bot.</p>
+                    </div>
+
+                    <!-- Terms -->
+                    <p class="login-terms">
+                        Al continuar, aceptas nuestros 
+                        <a href="#" class="link">Términos de Servicio</a> y 
+                        <a href="#" class="link">Política de Privacidad</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Info Panel -->
+            <div class="login-info">
+                <div class="info-content">
+                    <h2>Características Principales</h2>
+                    
+                    <div class="info-section">
+                        <ul class="features-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">⚙️</span>
+                                <span class="feature-text">Comandos Personalizados</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Estadísticas en Tiempo Real</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Protección Anti-Spam</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">🎬</span>
+                                <span class="feature-text">Clips y Shoutouts</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">⏱️</span>
+                                <span class="feature-text">Temporizadores Avanzados</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Seguridad Profesional</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>¿Preguntas?</h3>
+                        <p class="info-text">
+                            Visita nuestra documentación o contacta al equipo de soporte.
+                        </p>
+                        <a href="#" class="link">Ir a Soporte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="~/js/base.js"></script>
+    <script src="~/js/toast-notifications.js"></script>
+    <script src="~/js/login.js"></script>
+</body>
+</html>

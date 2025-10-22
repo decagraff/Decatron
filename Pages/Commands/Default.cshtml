@@ -1,0 +1,169 @@
+@page "/commands/default"
+@model Decatron.Default.Pages.DefaultModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Comandos por Defecto";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/default-commands.css" />
+}
+
+<div class="default-commands-container">
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h1>Comandos por Defecto</h1>
+        <p class="text-muted">Gestiona los comandos predeterminados disponibles en tu canal</p>
+    </div>
+
+    <!-- Cards de comandos -->
+    <div class="commands-grid">
+        
+        <!-- Card del comando Title -->
+        <div class="command-card" data-command="title">
+            <div class="command-card-header">
+                <div class="command-info">
+                    <h3 class="command-name">Comando Title</h3>
+                    <div class="command-aliases">
+                        <span class="command-alias">!title</span>
+                        <span class="command-alias">!t</span>
+                    </div>
+                </div>
+                <div class="command-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-title" data-command="title">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="command-description">
+                <p>Permite consultar y cambiar el título del stream desde el chat.</p>
+            </div>
+            
+            <div class="command-usage">
+                <h4>Uso:</h4>
+                <div class="usage-examples">
+                    <div class="usage-item">
+                        <code>!title</code>
+                        <span>Muestra el título actual</span>
+                    </div>
+                    <div class="usage-item">
+                        <code>!title Nuevo título</code>
+                        <span>Cambia el título del stream</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="command-status">
+                <span id="status-title" class="status-badge loading">
+                    <span class="status-spinner"></span>
+                    Verificando...
+                </span>
+            </div>
+            
+            <div class="command-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openCommandSettings('title')">
+                    ⚙️ Configurar
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openCommandDetails('title')">
+                    📊 Ver Detalles
+                </button>
+            </div>
+        </div>
+
+        <div class="command-card" data-command="game">
+            <div class="command-card-header">
+                <div class="command-info">
+                    <h3 class="command-name">Comando Game</h3>
+                    <div class="command-aliases">
+                        <span class="command-alias">!game</span>
+                    </div>
+                </div>
+                <div class="command-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-game" data-command="game">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="command-description">
+                <p>Permite consultar y cambiar la categoría del stream desde el chat.</p>
+            </div>
+
+            <div class="command-usage">
+                <h4>Uso:</h4>
+                <div class="usage-examples">
+                    <div class="usage-item">
+                        <code>!game</code>
+                        <span>Muestra la categoría actual</span>
+                    </div>
+                    <div class="usage-item">
+                        <code>!game League of Legends</code>
+                        <span>Cambia la categoría del stream</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="command-status">
+                <span id="status-game" class="status-badge loading">
+                    <span class="status-spinner"></span>
+                    Verificando...
+                </span>
+            </div>
+
+            <div class="command-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openCommandSettings('game')">
+                    ⚙️ Configurar
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openMicroCommands()">
+                    🎮 Micro Comandos
+                </button>
+            </div>
+        </div>
+
+        <!-- Placeholder para futuros comandos -->
+        <div class="command-card command-card-placeholder">
+            <div class="command-card-header">
+                <div class="command-info">
+                    <h3 class="command-name">Más comandos próximamente</h3>
+                </div>
+            </div>
+            
+            <div class="command-description">
+                <p class="text-muted">Se agregarán más comandos por defecto en futuras actualizaciones.</p>
+            </div>
+            
+            <div class="placeholder-icon">
+                🚀
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Información adicional -->
+    <div class="info-section">
+        <div class="card">
+            <h4>Información sobre Comandos por Defecto</h4>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Comandos Automáticos</strong>
+                    <p>Estos comandos están disponibles automáticamente cuando el bot está habilitado en tu canal.</p>
+                </div>
+                <div class="info-item">
+                    <strong>Permisos</strong>
+                    <p>Solo tú y los moderadores autorizados pueden usar comandos que modifican configuraciones.</p>
+                </div>
+                <div class="info-item">
+                    <strong>Personalización</strong>
+                    <p>Puedes activar/desactivar comandos individuales según tus necesidades.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/default-commands.js"></script>
+}

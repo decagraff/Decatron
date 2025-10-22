@@ -1,0 +1,74 @@
+Building...
+[07:25:58 INF] === DECATRON STARTUP DEBUG ===
+[07:25:58 INF] Decatron starting up...
+[07:25:58 INF] Registrando Controllers...
+[07:25:58 INF] Registrando Repositories...
+[07:25:58 INF] Registrando Core Services...
+[07:25:58 INF] Registrando EventSub Service...
+[07:25:58 INF] IEventSubService registrado correctamente
+[07:25:58 INF] Registrando Twitch Services...
+[07:25:58 INF] Construyendo aplicación...
+[07:25:58 INF] === CONFIGURANDO PIPELINE ===
+[07:25:58 INF] Configurando Routing...
+[07:25:58 INF] Mapeando Razor Pages...
+[07:25:59 INF] Mapeando Controllers...
+[07:25:59 INF] Application configured, starting services...
+[07:25:59 INF] === Configuration Loaded ===
+[07:25:59 INF] Twitch Bot Username: decatrontest
+[07:25:59 INF] Twitch Client ID: td8vr15lzmvbei4qj4bbd3u4m5jovu
+[07:25:59 INF] Channel ID: 1270917540
+[07:25:59 INF] EventSub Webhook URL: https://twitch.decatron.net/api/eventsub/webhook
+[07:25:59 INF] ===========================
+[07:25:59 INF] === APLICACIÓN LISTA ===
+[07:25:59 INF] Application ready, listening on configured ports
+[07:25:59 INF] EventSub configurado para webhooks en: /api/eventsub/webhook
+[07:25:59 INF] Endpoints de debug disponibles:
+[07:25:59 INF]   - GET /debug/ping
+[07:25:59 INF]   - GET /debug/controllers
+[07:25:59 INF]   - GET /api/eventsub/test (si TestEventSubController está funcionando)
+[07:25:59 INF] ========================
+[07:25:59 INF] Iniciando TwitchBotService...
+[07:25:59 INF] Token del bot obtenido desde BD: 5grkywsw7l...
+[07:25:59 INF] [TwitchLib, 3.3.1.0] TwitchLib-TwitchClient initialized, assembly version: 3.3.1.0
+[07:25:59 INF] TwitchBotService inicializado - Bot: decatrontest
+[07:25:59 INF] [TwitchLib, 3.3.1.0] Connecting to: wss://irc-ws.chat.twitch.tv:443
+[07:26:00 INF] [TwitchLib, 3.3.1.0] Should be connected!
+[07:26:00 INF] Cliente Twitch conectado exitosamente
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 001 decatrontest :Welcome, GLHF!
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 002 decatrontest :Your host is tmi.twitch.tv
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 003 decatrontest :This server is rather new
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 004 decatrontest :-
+[07:26:01 INF] IRC conectado exitosamente
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 375 decatrontest :-
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 372 decatrontest :You are in a maze of twisty passages, all alike.
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv 376 decatrontest :>
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv CAP * ACK :twitch.tv/membership
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv CAP * ACK :twitch.tv/commands
+[07:26:01 INF] [TwitchLib, 3.3.1.0] Received: :tmi.twitch.tv CAP * ACK :twitch.tv/tags
+[07:26:02 INF] Conectando a 2 canales desde BD
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Joining channel: anthonydeca
+[07:26:02 INF] Conectado al canal: anthonydeca
+[07:26:02 INF] Conectado al canal: decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest!decatrontest@decatrontest.tmi.twitch.tv JOIN #anthonydeca
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest.tmi.twitch.tv 353 decatrontest = #anthonydeca :decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest.tmi.twitch.tv 366 decatrontest #anthonydeca :End of /NAMES list
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Joining channel: decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: @badge-info=;badges=;color=;display-name=decatrontest;emote-sets=0,300374282;mod=0;subscriber=0;user-type= :tmi.twitch.tv USERSTATE #anthonydeca
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: @emote-only=0;followers-only=-1;r9k=0;room-id=107935698;slow=0;subs-only=0 :tmi.twitch.tv ROOMSTATE #anthonydeca
+[07:26:02 INF] Bot unido al canal: anthonydeca
+[07:26:02 INF] Bot conectado a 2 canales
+[07:26:02 INF] TwitchBotService iniciado correctamente
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest!decatrontest@decatrontest.tmi.twitch.tv JOIN #decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest.tmi.twitch.tv 353 decatrontest = #decatrontest :decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: :decatrontest.tmi.twitch.tv 366 decatrontest #decatrontest :End of /NAMES list
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Finished channel joining queue.
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: @badge-info=;badges=broadcaster/1;color=;display-name=decatrontest;emote-sets=0,300374282;mod=0;subscriber=0;user-type= :tmi.twitch.tv USERSTATE #decatrontest
+[07:26:02 INF] [TwitchLib, 3.3.1.0] Received: @emote-only=0;followers-only=-1;r9k=0;room-id=1270917540;slow=0;subs-only=0 :tmi.twitch.tv ROOMSTATE #decatrontest
+[07:26:02 INF] Bot unido al canal: decatrontest
+[07:26:03 INF] [TwitchLib, 3.3.1.0] Finished channel joining queue.
+[07:26:25 INF] [TwitchLib, 3.3.1.0] Received: :decatheonlyone!decatheonlyone@decatheonlyone.tmi.twitch.tv JOIN #decatrontest
+[07:26:25 INF] [TwitchLib, 3.3.1.0] Received: :decatheonlyone!decatheonlyone@decatheonlyone.tmi.twitch.tv JOIN #anthonydeca
+[07:26:25 INF] [TwitchLib, 3.3.1.0] Received: :wizebot!wizebot@wizebot.tmi.twitch.tv JOIN #anthonydeca
+[07:26:25 INF] [TwitchLib, 3.3.1.0] Received: :anthonydeca!anthonydeca@anthonydeca.tmi.twitch.tv JOIN #anthonydeca
+[07:27:00 INF] [TwitchLib, 3.3.1.0] Received: PONG :tmi.twitch.tv
+[07:28:00 INF] [TwitchLib, 3.3.1.0] Received: PONG :tmi.twitch.tv

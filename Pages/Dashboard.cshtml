@@ -1,0 +1,27 @@
+@page
+@model DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-header">
+    <h1>Hola, @User?.FindFirst(System.Security.Claims.ClaimTypes.GivenName)?.Value</h1>
+    <p class="subtitle">Bienvenido a tu panel de control de Decatron</p>
+</div>
+
+<!-- Welcome Section -->
+<section class="welcome-section">
+    <div class="welcome-content">
+        <h2>Panel de Control</h2>
+        <p>Desde aquí puedes gestionar todos los aspectos de tu bot de Twitch. Accede a configuración, estadísticas y más.</p>
+    </div>
+</section>
+
+<!-- Quick Actions (Placeholder) -->
+<section class="quick-actions-section">
+    <h2>Acceso Rápido</h2>
+    <div class="quick-actions-grid">
+        <!-- Las cards irán aquí después -->
+        <p class="placeholder-text">Las tarjetas de acceso rápido se agregarán aquí pronto.</p>
+    </div>
+</section>

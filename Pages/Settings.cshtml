@@ -1,0 +1,287 @@
+@page
+@using System.Security.Claims
+@model SettingsModel
+@{
+    ViewData["Title"] = "Configuración";
+}
+
+<link rel="stylesheet" href="~/css/settings.css" />
+
+<div class="page-header">
+    <h1>⚙️ Configuración</h1>
+    <p class="subtitle">Gestiona tu bot y permisos de acceso</p>
+</div>
+
+<!-- Settings Grid -->
+<div class="settings-grid settings-container">
+    <!-- General Settings Card -->
+    <section class="settings-card card bot-settings">
+        <h2>Configuración General</h2>
+
+        <div class="setting-item">
+            <div class="setting-info">
+                <label>Estado del Bot</label>
+                <span class="description">Activar o desactivar completamente el bot</span>
+            </div>
+            <div class="setting-control">
+                <input type="checkbox" id="bot-enabled" class="toggle-input" @(Model.Settings.BotEnabled ? "checked" : "") />
+            </div>
+        </div>
+
+        <div class="setting-actions">
+            <button id="save-settings" class="btn btn-primary">💾 Guardar Cambios</button>
+        </div>
+    </section>
+
+    <!-- User Access Card -->
+    <section class="settings-card card user-management">
+        <div class="card-header">
+            <h2>Gestión de Accesos</h2>
+            <button id="add-access-btn" class="btn btn-primary btn-sm">➕ Agregar Acceso</button>
+        </div>
+
+        <div class="access-list">
+            <h3>👑 Propietario</h3>
+            <div class="access-item owner">
+                <div class="access-info">
+                    <div class="access-name">@Model.CurrentUser.DisplayName</div>
+                    <div class="access-username">@@@Model.CurrentUser.Login</div>
+                </div>
+                <div class="access-level">
+                    <span class="badge badge-owner">Propietario</span>
+                </div>
+            </div>
+
+            <!-- Usuarios con permisos (se cargarán via JavaScript) -->
+            <div id="authorized-users-section" style="display: none;">
+                <h3 style="margin-top: 2rem;">🔓 Usuarios Autorizados</h3>
+                <div id="authorized-users-list">
+                    <!-- Los usuarios se cargarán aquí via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Usuarios del sistema anterior (mantenemos compatibilidad) -->
+            @if (Model.UserAccesses.Any())
+            {
+                <h3 style="margin-top: 2rem;">🔓 Usuarios Autorizados (Sistema Anterior)</h3>
+                @foreach (var access in Model.UserAccesses)
+                {
+                    <div class="access-item legacy-access">
+                        <div class="access-info">
+                            <div class="access-id">ID: @access.AuthorizedUserId</div>
+                            <small class="text-muted">Sistema anterior</small>
+                        </div>
+                        <div class="access-level">
+                            <span class="badge badge-@access.PermissionLevel">@access.PermissionLevel</span>
+                        </div>
+                        <button class="btn btn-sm btn-secondary" onclick="removeAccess(@access.Id)">❌</button>
+                    </div>
+                }
+            }
+        </div>
+
+        <!-- Tabla de usuarios autorizados (nueva estructura) -->
+        <div id="users-table-container" class="users-table-container" style="display: none;">
+            <h3>👥 Usuarios con Acceso</h3>
+            <table id="users-table" class="users-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Permisos</th>
+                        <th>Agregado por</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los usuarios se cargarán aquí via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mensaje cuando no hay usuarios -->
+        <div id="no-users-message" class="no-users-message" style="display: none;">
+            <i class="fas fa-users"></i>
+            <p>No hay usuarios autorizados adicionales.</p>
+            <p><small>Los usuarios autorizados pueden gestionar el bot según su nivel de permisos.</small></p>
+        </div>
+    </section>
+
+    <!-- System Info Card -->
+    <section class="settings-card card">
+        <h2>Información del Sistema</h2>
+
+        <div class="system-info">
+            <div class="info-row">
+                <span class="label">Versión:</span>
+                <span class="value">Decatron v2.0</span>
+            </div>
+            <div class="info-row">
+                <span class="label">ID Único:</span>
+                <span class="value code">@Model.CurrentUser.UniqueId</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Canal:</span>
+                <span class="value">@Model.CurrentUser.Login</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Miembro Desde:</span>
+                <span class="value">@Model.CurrentUser.CreatedAt.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Última Actualización:</span>
+                <span class="value">@Model.Settings.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</span>
+            </div>
+        </div>
+
+        <!-- Información de permisos del usuario actual -->
+        <div class="current-user-permissions" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <h4>Tu Nivel de Acceso</h4>
+            <div class="permission-display" id="current-user-permission">
+                <span class="badge badge-secondary">Cargando...</span>
+            </div>
+            <small class="text-muted">Este es tu nivel de acceso actual en el sistema</small>
+        </div>
+    </section>
+
+    <!-- Integraciones Card -->
+    <section class="settings-card card">
+        <h2>Integraciones</h2>
+
+        <div class="integrations-list">
+            <div class="integration-item coming-soon">
+                <div class="integration-icon">🎵</div>
+                <div class="integration-info">
+                    <div class="integration-name">Spotify</div>
+                    <div class="integration-status">Próximamente</div>
+                </div>
+            </div>
+
+            <div class="integration-item coming-soon">
+                <div class="integration-icon">🎮</div>
+                <div class="integration-info">
+                    <div class="integration-name">Steam</div>
+                    <div class="integration-status">Próximamente</div>
+                </div>
+            </div>
+
+            <div class="integration-item coming-soon">
+                <div class="integration-icon">📺</div>
+                <div class="integration-info">
+                    <div class="integration-name">YouTube</div>
+                    <div class="integration-status">Próximamente</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Modal: Add User Access -->
+<div id="addAccessModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Agregar Usuario Autorizado</h2>
+            <button type="button" class="close" onclick="closeAddAccessModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addAccessForm">
+                <div class="form-group">
+                    <label for="accessUserId">ID de Usuario de Twitch:</label>
+                    <input type="text" id="accessUserId" class="form-input" placeholder="Ejemplo: I9KYK-D3865-I9IL1-2XY9O-6X648" required>
+                    <small class="form-help">Puedes obtener el ID desde @Model.OverlayUrl</small>
+
+                    <div class="example-box">
+                        <p><strong>Ejemplo:</strong></p>                        
+                        <p>Si el usuario es streamer123, debe proporcionar su ID único, que puede encontrar en @Model.OverlayUrl</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="accessPermission">Nivel de Permisos:</label>
+                    <select id="accessPermission" class="form-select" required>
+                        <option value="">Seleccionar nivel...</option>
+                        <option value="commands">Solo Comandos</option>
+                        <option value="moderation">Moderación</option>
+                        <option value="control_total">Control Total</option>
+                    </select>
+
+                    <div class="permission-descriptions">
+                        <p><strong>Descripción de niveles:</strong></p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.85rem;">
+                            <li><strong>Solo Comandos:</strong> Puede usar comandos básicos del bot</li>
+                            <li><strong>Moderación:</strong> Puede gestionar comandos y moderación</li>
+                            <li><strong>Control Total:</strong> Acceso completo (excepto eliminar el bot)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="permission-indicator">
+                    <strong>⚠️ Importante:</strong> Otorga permisos solo a personas de confianza. Los usuarios con "Control Total" pueden modificar casi todas las configuraciones del bot.
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeAddAccessModal()">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="submitAddAccess()">Agregar Usuario</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/settings.js"></script>
+
+    <script>
+        // Script para cerrar dropdown al hacer click fuera
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.user-dropdown-container');
+            const dropdown = document.getElementById('userDropdown');
+
+            if (container && dropdown && !container.contains(event.target)) {
+                dropdown.classList.remove('show');
+                const arrow = document.querySelector('.dropdown-arrow');
+                if (arrow) {
+                    arrow.classList.remove('rotated');
+                }
+            }
+        });
+
+        // Función para toggle del dropdown de usuario
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const arrow = document.querySelector('.dropdown-arrow');
+
+            if (dropdown && arrow) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                    arrow.classList.remove('rotated');
+                } else {
+                    dropdown.classList.add('show');
+                    arrow.classList.add('rotated');
+                }
+            }
+        }
+
+        // Verificar cuentas múltiples al cargar
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkMultipleAccounts();
+        });
+
+        async function checkMultipleAccounts() {
+            try {
+                const response = await fetch('/api/user/available-accounts');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.accounts && data.accounts.length > 1) {
+                        const manageOption = document.querySelector('[data-action="manage-accounts"]');
+                        if (manageOption) {
+                            manageOption.style.display = 'block';
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking multiple accounts:', error);
+            }
+        }
+    </script>
+}

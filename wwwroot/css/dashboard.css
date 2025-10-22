@@ -1,0 +1,654 @@
+/* ============================================
+   DASHBOARD LAYOUT STYLES
+   Profesional tipo Nightbot
+   ============================================ */
+
+/* ============================================
+   MAIN CONTAINER & LAYOUT
+   ============================================ */
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+}
+
+body.dark-mode .dashboard-container {
+    background-color: var(--bg-dark);
+}
+
+/* ============================================
+   SIDEBAR (Left Navigation)
+   ============================================ */
+
+.sidebar {
+    width: 250px;
+    background-color: rgba(25, 23, 54, 0.98);
+    border-right: 1px solid rgba(124, 58, 237, 0.3);
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dark-mode .sidebar {
+    background-color: rgba(15, 13, 26, 0.98);
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-brand:hover {
+    color: var(--color-accent-light);
+}
+
+.brand-icon {
+    font-size: 1.5rem;
+}
+
+.brand-text {
+    display: inline-block;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0.75rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    border-radius: 0 8px 8px 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav-item:hover {
+    background-color: rgba(124, 58, 237, 0.15);
+    border-left-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.nav-item.active {
+    background-color: rgba(124, 58, 237, 0.25);
+    border-left-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-divider {
+    height: 1px;
+    background: rgba(124, 58, 237, 0.2);
+    border: none;
+    margin: 0.5rem 0;
+    opacity: 0.5;
+}
+
+.nav-logout {
+    color: rgba(239, 68, 68, 0.7);
+    margin-top: auto;
+}
+
+.nav-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-left-color: #ef4444;
+    color: #ef4444;
+}
+
+/* ============================================
+   MAIN WRAPPER & NAVBAR
+   ============================================ */
+
+.main-wrapper {
+    flex: 1;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Navbar */
+.navbar-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+body.dark-mode .navbar-dashboard {
+    background-color: rgba(25, 23, 54, 0.95);
+    border-bottom-color: var(--border-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .sidebar-toggle {
+    color: var(--text-light);
+}
+
+.sidebar-toggle:hover {
+    background-color: rgba(124, 58, 237, 0.1);
+    border-radius: 8px;
+}
+
+.toggle-icon {
+    display: inline-block;
+}
+
+/* ============================================
+   USER MENU DROPDOWN
+   ============================================ */
+
+.user-menu {
+    position: relative;
+}
+
+.user-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+body.dark-mode .user-button {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: var(--border-dark);
+    color: var(--text-light);
+}
+
+.user-button:hover {
+    background: rgba(124, 58, 237, 0.2);
+    border-color: var(--color-accent);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-accent);
+}
+
+.user-name {
+    display: inline-block;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-icon {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.user-button[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.98);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    min-width: 200px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: rgba(25, 23, 54, 0.98);
+    border-color: var(--border-dark);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: slideDownFade 0.3s ease-out;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--text-light);
+}
+
+.dropdown-item:hover {
+    background-color: rgba(124, 58, 237, 0.1);
+    padding-left: 1.5rem;
+    color: var(--color-accent);
+}
+
+.dropdown-item.dropdown-logout {
+    color: #ef4444;
+}
+
+.dropdown-item.dropdown-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-light);
+    border: none;
+    margin: 0.5rem 0;
+}
+
+body.dark-mode .dropdown-divider {
+    background: var(--border-dark);
+}
+
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.7;
+    margin: 0;
+}
+
+/* ============================================
+   WELCOME SECTION
+   ============================================ */
+
+.welcome-section {
+    padding: 2.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
+    border: 1px solid var(--border-light);
+    margin-bottom: 3rem;
+}
+
+body.dark-mode .welcome-section {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.08));
+    border-color: var(--border-dark);
+}
+
+.welcome-content h2 {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+}
+
+.welcome-content p {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================
+   QUICK ACTIONS SECTION
+   ============================================ */
+
+.quick-actions-section {
+    margin-bottom: 3rem;
+}
+
+.quick-actions-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.placeholder-text {
+    grid-column: 1 / -1;
+    padding: 2rem;
+    text-align: center;
+    opacity: 0.6;
+    border: 2px dashed var(--border-light);
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+body.dark-mode .placeholder-text {
+    border-color: var(--border-dark);
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+.sidebar::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-light);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-wrapper {
+        margin-left: 220px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-right: none;
+        border-top: 1px solid rgba(124, 58, 237, 0.3);
+        padding: 0.5rem;
+        overflow-y: visible;
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        margin-bottom: 70px;
+    }
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 0.25rem;
+        padding: 0;
+    }
+
+    .nav-item {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+        border-left: none;
+        border-bottom-color: var(--color-accent);
+        background-color: transparent;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-divider {
+        display: none;
+    }
+
+    .sidebar-toggle {
+        display: inline-block;
+    }
+
+    .navbar-dashboard {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .page-header .subtitle {
+        font-size: 1rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        z-index: 500;
+    }
+
+    .sidebar-nav {
+        gap: 0.1rem;
+    }
+
+    .nav-item {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+    }
+
+    .nav-icon {
+        font-size: 1rem;
+    }
+
+    .navbar-dashboard {
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-left {
+        gap: 0.5rem;
+    }
+
+    .user-button {
+        padding: 0.4rem 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .user-avatar {
+        width: 24px;
+        height: 24px;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .main-content {
+        padding: 0.75rem;
+    }
+
+    .dropdown-menu {
+        right: -1rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-section {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.quick-actions-section {
+    animation: slideInUp 0.6s ease-out 0.1s backwards;
+}
+
+/* ============================================
+   COMPATIBILITY ADJUSTMENTS
+   ============================================ */
+
+/* Evitar conflictos con settings.css */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}

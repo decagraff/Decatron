@@ -1,0 +1,20 @@
+@{
+    // Obtener la ruta actual
+    var currentPath = Context.Request.Path.Value?.ToLower() ?? "";
+
+    // Index y Login no usan layout (tienen su propio HTML5)
+    if (currentPath == "/" || currentPath.Contains("/index") || currentPath.Contains("/login"))
+    {
+        Layout = null;
+    }
+    // Dashboard y Settings usan _Layout.cshtml
+    else if (currentPath.Contains("/dashboard") || currentPath.Contains("/settings"))
+    {
+        Layout = "_Layout";
+    }
+    // Por defecto, sin layout
+    else
+    {
+        Layout = null;
+    }
+}

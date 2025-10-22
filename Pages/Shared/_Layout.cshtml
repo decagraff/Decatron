@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Decatron - Dashboard de Control" />
+    <meta name="theme-color" content="#7c3aed" />
+    <title>@ViewData["Title"] - Decatron</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/css/base.css" />
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <link rel="stylesheet" href="~/css/settings.css" />
+    <link rel="stylesheet" href="~/css/toast-notifications.css" />
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Left) -->
+        <aside class="sidebar" role="navigation" aria-label="Menú de navegación">
+            <div class="sidebar-header">
+                <a href="/dashboard" class="sidebar-brand">
+                    <span class="brand-icon">⚡</span>
+                    <span class="brand-text">Decatron</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="nav-item" title="Dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+
+                <a href="/settings" class="nav-item" title="Configuración">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Configuración</span>
+                </a>
+
+                <a href="/commands/default" class="nav-item" title="Comandos por Defecto">
+                    <span class="nav-icon">⚡</span>
+                    <span class="nav-label">Comandos</span>
+                </a>
+                <a href="/commands/microcommands" class="nav-item" title="Micro Comandos">
+                    <span class="nav-icon">🎮</span>
+                    <span class="nav-label">Micro Comandos</span>
+                </a>
+
+                <hr class="nav-divider" />
+
+                <a href="/api/auth/logout" class="nav-item nav-logout" title="Cerrar sesión">
+                    <span class="nav-icon">🚪</span>
+                    <span class="nav-label">Cerrar Sesión</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-dashboard" role="navigation" aria-label="Barra de navegación superior">
+                <div class="navbar-left">
+                    <button id="sidebar-toggle" class="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
+                        <span class="toggle-icon">☰</span>
+                    </button>
+                    <button id="theme-toggle" class="theme-toggle" title="Cambiar tema" aria-label="Toggle theme">🌙</button>
+                </div>
+
+                <div class="navbar-right">
+                    <!-- Channel Switcher (se crea dinámicamente via JavaScript) -->
+                    
+                    <!-- User Menu Dropdown -->
+                    <div class="user-menu">
+                        <button class="user-button" id="user-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                            <img src="@(User?.FindFirst("ProfileImage")?.Value ?? "~/images/default-avatar.png")" 
+                                 alt="Avatar" 
+                                 class="user-avatar" />
+                            <span class="user-name">@User?.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value</span>
+                            <span class="dropdown-icon">▼</span>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu" id="user-dropdown-menu" role="menu">
+                            <a href="/settings" class="dropdown-item" role="menuitem">
+                                <span class="dropdown-icon">⚙️</span>
+                                <span class="dropdown-text">Configuración</span>
+                            </a>
+                            <hr class="dropdown-divider" />
+                            <a href="/api/auth/logout" class="dropdown-item dropdown-logout" role="menuitem">
+                                <span class="dropdown-icon">🚪</span>
+                                <span class="dropdown-text">Cerrar Sesión</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content" role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="~/js/base.js"></script>
+    <script src="~/js/toast-notifications.js"></script>
+    <script src="~/js/dashboard.js"></script>
+    <script src="~/js/navigation-permissions.js"></script>
+    <script src="~/js/ChannelSwitcher.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
