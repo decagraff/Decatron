@@ -1,0 +1,89 @@
+[2025-10-22 15:42:56 INF] === DECATRON STARTUP DEBUG ===
+[2025-10-22 15:42:56 INF] Decatron starting up...
+[2025-10-22 15:42:57 INF] Registrando Controllers...
+[2025-10-22 15:42:57 INF] Registrando Repositories...
+[2025-10-22 15:42:57 INF] Registrando Core Services...
+[2025-10-22 15:42:57 INF] Registrando EventSub Service...
+[2025-10-22 15:42:57 INF] IEventSubService registrado correctamente
+[2025-10-22 15:42:57 INF] Registrando Twitch Services...
+[2025-10-22 15:42:57 INF] Construyendo aplicación...
+[2025-10-22 15:42:57 INF] === CONFIGURANDO PIPELINE ===
+[2025-10-22 15:42:57 INF] Configurando Routing...
+[2025-10-22 15:42:57 INF] Mapeando Razor Pages...
+[2025-10-22 15:42:57 INF] Mapeando Controllers...
+[2025-10-22 15:42:57 INF] Application configured, starting services...
+[2025-10-22 15:42:57 INF] Comandos base cargados: 4
+[2025-10-22 15:42:57 DBG]   - !hola
+[2025-10-22 15:42:57 DBG]   - !title
+[2025-10-22 15:42:57 DBG]   - !t
+[2025-10-22 15:42:57 DBG]   - !game
+[2025-10-22 15:42:57 INF] === Configuration Loaded ===
+[2025-10-22 15:42:57 INF] Twitch Bot Username: decatrontest
+[2025-10-22 15:42:57 INF] Twitch Client ID: td8vr15lzmvbei4qj4bbd3u4m5jovu
+[2025-10-22 15:42:57 INF] Channel ID: 
+[2025-10-22 15:42:57 INF] EventSub Webhook URL: https://localhost:7282/api/eventsub/webhook
+[2025-10-22 15:42:57 INF] ===========================
+[2025-10-22 15:42:57 INF] === APLICACIÓN LISTA ===
+[2025-10-22 15:42:57 INF] Application ready, listening on configured ports
+[2025-10-22 15:42:57 INF] EventSub configurado para webhooks en: /api/eventsub/webhook
+[2025-10-22 15:42:57 INF] Endpoints de debug disponibles:
+[2025-10-22 15:42:57 INF]   - GET /debug/ping
+[2025-10-22 15:42:57 INF]   - GET /debug/controllers
+[2025-10-22 15:42:57 INF]   - GET /api/eventsub/test (si TestEventSubController está funcionando)
+[2025-10-22 15:42:57 INF] ========================
+[2025-10-22 15:42:57 INF] Iniciando TwitchBotService...
+[2025-10-22 15:42:57 WRN] TwitchBotService ya está en ejecución
+[2025-10-22 15:42:57 INF] Token del bot obtenido desde BD: 8a075o60ya...
+[2025-10-22 15:42:57 INF] TwitchBotService inicializado - Bot: decatrontest
+[2025-10-22 15:42:58 INF] Index page accessed
+[2025-10-22 15:42:58 INF] Cliente Twitch conectado exitosamente
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !jc -> just chatting para canal decatheonlyone
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !js -> just chatting para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !fsdg -> sgdf para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !sdfg -> sdfg para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !sdgf -> sdfg para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !ssdfgdfs -> sdfgdf para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !sdfgdf -> fdsgdf para canal anthonydeca
+[2025-10-22 15:42:58 DBG] Micro comando registrado: !dfsgsdfg -> dfsgdfg para canal anthonydeca
+[2025-10-22 15:42:58 INF] Micro comandos cargados: 8
+[2025-10-22 15:42:58 INF] Found 2 channels with bot enabled
+[2025-10-22 15:42:58 INF] Conectando a 2 canales desde configuración de settings
+[2025-10-22 15:42:58 INF] Conectado al canal: anthonydeca
+[2025-10-22 15:42:58 INF] Conectado al canal: decatheonlyone
+[2025-10-22 15:42:58 INF] Bot conectado a 1 canales habilitados
+[2025-10-22 15:42:58 INF] TwitchBotService iniciado correctamente
+[2025-10-22 15:42:59 INF] IRC conectado exitosamente
+[2025-10-22 15:43:02 INF] Login page accessed
+[2025-10-22 15:43:03 INF] Generated login URL for Twitch
+[2025-10-22 15:43:03 INF] Redirecting to Twitch login
+[2025-10-22 15:43:04 INF] Auth callback received - Error: 
+[2025-10-22 15:43:04 INF] Exchanging code for token...
+[2025-10-22 15:43:04 INF] Bot unido al canal: decatheonlyone
+[2025-10-22 15:43:05 INF] Successfully exchanged code for token
+[2025-10-22 15:43:05 INF] Fetching user information...
+[2025-10-22 15:43:05 INF] Retrieved user info for anthonydeca
+[2025-10-22 15:43:05 INF] Authenticating user: anthonydeca
+[2025-10-22 15:43:05 INF] User updated: anthonydeca
+[2025-10-22 15:43:05 INF] Updated existing user: anthonydeca
+[2025-10-22 15:43:05 INF] Connecting bot to channel: anthonydeca
+[2025-10-22 15:43:05 INF] Unido al canal: anthonydeca
+[2025-10-22 15:43:05 INF] User anthonydeca authenticated successfully
+[2025-10-22 15:43:06 INF] Dashboard accessed by user: anthonydeca
+[2025-10-22 15:43:06 INF] Bot unido al canal: anthonydeca
+[2025-10-22 15:43:06 INF] User 1 can manage 1 channels
+[2025-10-22 15:43:07 INF] Usuario anthonydeca accedió a la gestión de comandos por defecto
+[2025-10-22 15:43:08 INF] User 1 can manage 1 channels
+[2025-10-22 15:43:09 INF] Usuario 1 cambió estado del comando title a: True para canal 1
+[2025-10-22 15:43:11 INF] Usuario 1 cambió estado del comando game a: True para canal 1
+[2025-10-22 15:43:13 INF] Settings page loaded for user: anthonydeca
+[2025-10-22 15:43:14 INF] User 1 can manage 1 channels
+[2025-10-22 15:43:16 DBG] [anthonydeca] [anthonydeca] [!title ͏] [22/10/2025 15:43:16]
+[2025-10-22 15:43:16 INF] Ejecutando comando !title por anthonydeca en anthonydeca
+[2025-10-22 15:43:16 DBG] Usuario anthonydeca es el propietario del canal anthonydeca
+[2025-10-22 15:43:17 INF] Título cambiado por anthonydeca en anthonydeca: ͏
+[2025-10-22 15:43:17 WRN] Error enviando mensaje via API a anthonydeca: BadRequest - {"error":"Bad Request","status":400,"message":"Missing required parameter \"sender_id\""}
+[2025-10-22 15:43:32 DBG] [anthonydeca] [anthonydeca] [!title dsadsa] [22/10/2025 15:43:32]
+[2025-10-22 15:43:32 INF] Ejecutando comando !title por anthonydeca en anthonydeca
+[2025-10-22 15:43:32 DBG] Usuario anthonydeca es el propietario del canal anthonydeca
+[2025-10-22 15:43:32 INF] Título cambiado por anthonydeca en anthonydeca: dsadsa
+[2025-10-22 15:43:32 WRN] Error enviando mensaje via API a anthonydeca: BadRequest - {"error":"Bad Request","status":400,"message":"Missing required parameter \"sender_id\""}
