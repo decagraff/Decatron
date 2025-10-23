@@ -48,30 +48,32 @@ cd Decatron
 
 Antes de configurar el bot, necesitas crear una aplicación en Twitch:
 
-1. Ve a [Twitch Developer Console](https://dev.twitch.tv/console)
-2. Inicia sesión y crea una nueva aplicación
-3. Configura las **Redirect URIs**:
-   - Para desarrollo: `https://localhost:7282/api/auth/callback`
-   - Para producción: `https://tudominio.com/api/auth/callback`
-4. Guarda el **Client ID** y **Client Secret**
+**📖 [Guía Completa de Twitch Setup](TWITCH_SETUP.md)** - Sigue esta guía detallada para:
+- Crear aplicación en Twitch Developer Console
+- Configurar Redirect URIs correctamente
+- Obtener Client ID y Client Secret
+- Configurar scopes y permisos
 
 ### 3. Generación de Tokens con TwitchTokenManager
 
-El proyecto incluye `TwitchTokenManager.exe`, una herramienta de escritorio desarrollada en Python/PyQt6 para generar tokens fácilmente:
+El proyecto incluye `TwitchTokenManager.exe`, una herramienta de escritorio desarrollada en Python/PyQt6 para generar tokens fácilmente.
 
+**📖 [Guía Completa del TwitchTokenManager](TWITCHTOKENMANAGER_GUIDE.md)** - Manual detallado que incluye:
+- Configuración inicial de la herramienta
+- Tres modos de generación de tokens
+- Selección completa de scopes
+- Solución de problemas
+- Aspectos de seguridad
+
+**Configuración Rápida:**
 1. **Ejecuta** `TwitchTokenManager.exe`
-2. **Configura** Client ID, Client Secret y Redirect URI
-3. **Selecciona** el tipo de token:
-   - **User Access Token**: Para acciones en nombre del streamer
-   - **App Access Token**: Para llamadas API generales
-   - **Ambos Tokens**: **Recomendado** para configuración completa
-4. **Configuración de Scopes**: 
-   - El TwitchTokenManager incluye todos los scopes disponibles
-   - **Recomendación**: Seleccionar "Seleccionar Todos" para máxima funcionalidad
-   - Los scopes se usan solo para el User Access Token
-5. **Copia** los tokens generados para el siguiente paso
+2. **Configura** Client ID, Client Secret y Redirect URI (obtenidos del paso anterior)
+3. **Selecciona** "Generar Ambos Tokens" (recomendado)
+4. **Usa** "Seleccionar Todos" para los scopes (máxima compatibilidad)
+5. **Autoriza** en el navegador cuando se solicite
+6. **Copia** la configuración JSON generada
 
-**Recomendación Importante**: Usar una cuenta de bot separada (diferente a tu cuenta principal de streaming) para mayor seguridad y organización.
+**Recomendación Importante**: Usar una cuenta de bot separada (diferente a tu cuenta principal de streaming) para mayor seguridad.
 
 **Ejemplo de salida del TwitchTokenManager:**
 ```
@@ -275,7 +277,21 @@ Decatron implementa un sistema de permisos jerárquico de tres niveles:
 
 4. **Configuración de HTTPS**: Requerido para webhooks de Twitch
 
-## Estructura del Proyecto
+---
+
+## Documentación Adicional
+
+### Guías Completas
+
+- **[📖 Configuración de Twitch Developer Console](TWITCH_SETUP.md)** - Guía paso a paso para crear y configurar tu aplicación en Twitch
+- **[📖 Manual del TwitchTokenManager](TWITCHTOKENMANAGER_GUIDE.md)** - Guía completa de la herramienta de generación de tokens
+
+### Archivos de Configuración
+
+- **`appsettings.example.json`** - Plantilla de configuración principal
+- **`appsettings.Secrets.example.json`** - Plantilla de configuración de credenciales
+
+### Estructura del Proyecto
 
 ```
 Decatron/
@@ -288,69 +304,11 @@ Decatron/
 ├── Pages/                      # Razor Pages (interfaz web)
 ├── wwwroot/                    # Assets estáticos
 ├── TwitchTokenManager.exe      # Herramienta de tokens
-└── Migrations/                 # Migraciones de base de datos
+├── Migrations/                 # Migraciones de base de datos
+├── README.md                   # Este archivo
+├── TWITCH_SETUP.md            # Guía de configuración de Twitch
+└── TWITCHTOKENMANAGER_GUIDE.md # Manual del TwitchTokenManager
 ```
-
-## Logs y Debugging
-
-Los logs se almacenan en `logs/decatron-YYYY-MM-DD.txt` con rotación diaria.
-
-**Verificar estado del bot:**
-```
-[INFO] Decatron starting up...
-[INFO] Twitch Bot Username: tu_bot_username
-[INFO] Channel ID: tu_channel_id
-[INFO] Application ready, listening on configured ports
-```
-
-## Desarrollo y Contribución
-
-### Estado del Proyecto
-
-Decatron 2.0 está siendo desarrollado como la versión open source de Decatron 1.0. El proyecto principal incluye muchas más funcionalidades que se irán migrando gradualmente:
-
-- **Sistema de comandos personalizado completo** con scripting
-- **Gestión avanzada de followers**
-- **Overlays dinámicos**
-- **Sistema de timers automáticos**
-- **Protección anti-spam avanzada**
-- **Y muchas funcionalidades más...**
-
-### Agregar Nuevos Comandos
-
-1. Crear clase que implemente `ICommand` en `Decatron.Services/Commands/`
-2. Registrar en el `CommandService`
-3. Aplicar migraciones si necesita cambios en BD
-
-### Herramientas de Desarrollo
-
-- **Visual Studio**: Recomendado para el desarrollo del proyecto
-- **Entity Framework Core**: Para migraciones de base de datos
-- **PyQt6**: Para el TwitchTokenManager (si necesitas modificarlo)
-
-### Extensiones
-
-- El sistema está diseñado para ser modular
-- Servicios independientes permiten fácil extensión
-- Sistema de permisos reutilizable para nuevas funcionalidades
-- Arquitectura preparada para agregar más comandos y características
-
-## Solución de Problemas
-
-### Bot no se conecta
-- Verifica que los tokens sean válidos y estén en `bot_tokens`
-- Confirma que `BotUsername` coincida con el usuario de los tokens
-- Revisa logs para errores específicos
-
-### Comandos no funcionan
-- Verifica que el comando esté habilitado en la configuración
-- Confirma permisos del usuario
-- Revisa que el bot esté activo para el canal
-
-### Errores de base de datos
-- Confirma que la cadena de conexión sea correcta
-- Verifica que las migraciones estén aplicadas
-- Asegúrate de que la base de datos exista
 
 ## Licencia
 
@@ -358,4 +316,4 @@ Este proyecto está bajo la licencia especificada en `LICENSE.txt`.
 
 ---
 
-**README para facilitar el arranque del proyecto Decatron. Ajusta las instrucciones según tu entorno y credenciales específicas.**
+**README para facilitar el arranque del proyecto Decatron 2.0. Para documentación específica, consulta las guías enlazadas arriba.**
