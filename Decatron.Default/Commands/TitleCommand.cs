@@ -18,7 +18,7 @@ namespace Decatron.Default.Commands
         private readonly ILogger<TitleCommand> _logger;
         private readonly ICommandStateService _commandStateService;
 
-        public string Name => "title";
+        public string Name => "!title";
         public string Description => "Cambia o consulta el título del stream";
 
         public TitleCommand(IConfiguration configuration, ILogger<TitleCommand> logger, ICommandStateService commandStateService)

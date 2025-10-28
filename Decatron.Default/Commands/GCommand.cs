@@ -17,7 +17,7 @@ namespace Decatron.Default.Commands
         private readonly ICommandStateService _commandStateService;
         private readonly DecatronDbContext _dbContext;
 
-        public string Name => "g";
+        public string Name => "!g";
         public string Description => "Comando de gestión de categorías y micro comandos";
 
         public GCommand(

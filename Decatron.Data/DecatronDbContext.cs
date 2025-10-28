@@ -1,4 +1,5 @@
 ﻿using Decatron.Core.Models;
+using Decatron.Scripting.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Decatron.Data
@@ -20,6 +21,10 @@ namespace Decatron.Data
         public DbSet<MicroGameCommands> MicroGameCommands { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<UserChannelPermissions> UserChannelPermissions { get; set; }
+        public DbSet<CustomCommand> CustomCommands { get; set; }
+        public DbSet<ScriptCommand> ScriptedCommands { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -237,6 +242,48 @@ namespace Decatron.Data
                 entity.HasIndex(e => e.AccessLevel).HasDatabaseName("idx_access_level");
 
                 entity.ToTable("user_channel_permissions");
+            });
+
+            // CustomCommands Configuration
+            modelBuilder.Entity<CustomCommand>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ChannelName).IsRequired().HasMaxLength(100).HasColumnName("channel_name");
+                entity.Property(e => e.CommandName).IsRequired().HasMaxLength(100).HasColumnName("command_name");
+                entity.Property(e => e.Response).IsRequired().HasColumnName("response");
+                entity.Property(e => e.Restriction).IsRequired().HasMaxLength(50).HasDefaultValue("all").HasColumnName("restriction");
+                entity.Property(e => e.IsActive).IsRequired().HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedBy).IsRequired().HasMaxLength(100).HasColumnName("created_by");
+                entity.Property(e => e.CreatedAt).IsRequired().HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).IsRequired().HasColumnName("updated_at");
+                entity.Property(e => e.IsScripted).IsRequired().HasDefaultValue(false).HasColumnName("is_scripted");
+                entity.Property(e => e.ScriptContent).HasColumnName("script_content");
+
+                // Índices
+                entity.HasIndex(e => new { e.ChannelName, e.CommandName })
+                    .IsUnique()
+                    .HasDatabaseName("idx_channel_command");
+
+                entity.HasIndex(e => e.ChannelName).HasDatabaseName("idx_channel_name");
+                entity.HasIndex(e => e.CommandName).HasDatabaseName("idx_command_name");
+                entity.HasIndex(e => e.IsActive).HasDatabaseName("idx_is_active");
+
+                entity.ToTable("custom_commands");
+            });
+
+            modelBuilder.Entity<ScriptCommand>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.UserId).IsRequired().HasColumnName("user_id");
+                entity.Property(e => e.ChannelName).IsRequired().HasMaxLength(100).HasColumnName("channel_name");
+                entity.Property(e => e.CommandName).IsRequired().HasMaxLength(100).HasColumnName("command_name");
+                entity.Property(e => e.ScriptContent).IsRequired().HasColumnName("script_content");
+                entity.Property(e => e.IsActive).IsRequired().HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).IsRequired().HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).IsRequired().HasColumnName("updated_at");
+
+                entity.HasIndex(e => new { e.ChannelName, e.CommandName }).IsUnique();
+                entity.ToTable("scripted_commands");
             });
         }
     }

@@ -1,13 +1,20 @@
-using Decatron.Core.Interfaces;
-using Decatron.Default.Commands;
-using Decatron.Services;
-using Decatron.Data;
-using Decatron.Default.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Decatron.Core.Functions;
 using Decatron.Core.Helpers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
+using Decatron.Core.Interfaces;
+using Decatron.Core.Models;
+using Decatron.Data;
+using Decatron.Default.Commands;
+using Decatron.Default.Helpers;
+using Decatron.Scripting.Services;
+using Decatron.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Decatron.Services
 {
@@ -46,7 +53,7 @@ namespace Decatron.Services
             // Comandos básicos
             RegisterCommand(new Commands.HolaCommand());
 
-            // Comandos por defecto
+            // Comandos por defecto (todos con ! ahora)
             RegisterCommand(new TitleCommand(_configuration, _loggerFactory.CreateLogger<TitleCommand>(), _commandStateService));
             RegisterCommand(new TCommand(_configuration, _loggerFactory.CreateLogger<TCommand>(), _commandStateService));
             RegisterCommand(new GameCommand(_configuration, _loggerFactory.CreateLogger<GameCommand>(), _commandStateService));
@@ -57,7 +64,7 @@ namespace Decatron.Services
             _logger.LogInformation($"Comandos base cargados: {_commands.Count}");
             foreach (var cmd in _commands.Keys)
             {
-                _logger.LogDebug($"  - !{cmd}");
+                _logger.LogDebug($"  - {cmd}");
             }
         }
 
@@ -114,44 +121,149 @@ namespace Decatron.Services
         {
             try
             {
-                if (!chatMessage.StartsWith("!"))
-                    return;
-
-                var parts = chatMessage.Substring(1).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                var parts = chatMessage.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length == 0)
                     return;
 
                 var commandName = parts[0].ToLower();
 
-                // IMPORTANTE: Manejar comando !g especialmente
-                if (commandName == "g")
+                // 1. COMANDOS DEL SERVIDOR (registrados en _commands)
+                if (_commands.TryGetValue(commandName, out var command))
+                {
+                    _logger.LogInformation($"Ejecutando comando del servidor {commandName} por {username} en {channel}");
+                    await command.ExecuteAsync(username, channel, chatMessage, _messageSender);
+                    return;
+                }
+
+                // 2. COMANDOS ESPECIALES del servidor
+                if (commandName == "!crear")
+                {
+                    _logger.LogInformation($"Ejecutando comando !crear por {username} en {channel}");
+                    await ProcessCreateCommand(username, channel, chatMessage);
+                    return;
+                }
+
+                if (commandName == "!g")
                 {
                     _logger.LogInformation($"Ejecutando comando !g por {username} en {channel}");
                     await ProcessGCommand(username, channel, chatMessage);
                     return;
                 }
 
-                // Verificar comandos estándar
-                if (_commands.TryGetValue(commandName, out var command))
+                // 3. MICRO COMANDOS (requieren !)
+                if (commandName.StartsWith("!"))
                 {
-                    _logger.LogInformation($"Ejecutando comando !{commandName} por {username} en {channel}");
-                    await command.ExecuteAsync(username, channel, chatMessage, _messageSender);
-                    return;
+                    var baseCommand = commandName.Substring(1);
+                    if (_microCommandsCache.ContainsKey(channel) &&
+                        _microCommandsCache[channel].ContainsKey(baseCommand))
+                    {
+                        await ProcessMicroCommand(username, channel, commandName, _microCommandsCache[channel][baseCommand]);
+                        return;
+                    }
                 }
 
-                // Verificar micro comandos
-                if (_microCommandsCache.ContainsKey(channel) &&
-                    _microCommandsCache[channel].ContainsKey(commandName))
-                {
-                    await ProcessMicroCommand(username, channel, commandName, _microCommandsCache[channel][commandName]);
-                    return;
-                }
+                // 4. COMANDOS CUSTOM del streamer (de la BD)
+                await ProcessCustomCommandAsync(username, channel, commandName, chatMessage);
 
-                _logger.LogDebug($"Comando desconocido: !{commandName} por {username} en {channel}");
+                _logger.LogDebug($"Comando desconocido: {commandName} por {username} en {channel}");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error procesando comando de {username} en {channel}: {chatMessage}");
+            }
+        }
+
+        public async Task ProcessCustomCommandAsync(string username, string channel, string commandName, string fullMessage)
+        {
+            try
+            {
+                using var scope = _serviceScopeFactory.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<DecatronDbContext>();
+                var scriptingService = scope.ServiceProvider.GetRequiredService<ScriptingService>();
+
+                // Verificar si es un comando con script
+                if (await scriptingService.IsScriptedCommandAsync(channel, commandName))
+                {
+                    await ExecuteScriptedCommand(commandName, username, channel, fullMessage, scriptingService);
+                    return;
+                }
+
+                // Verificar comando normal en la base de datos
+                var customCommand = await dbContext.CustomCommands
+                    .FirstOrDefaultAsync(c => c.CommandName == commandName && c.ChannelName == channel && c.IsActive);
+
+                if (customCommand != null)
+                {
+                    await ExecuteNormalCustomCommand(customCommand, username, channel, fullMessage);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error procesando comando personalizado {commandName} en {channel}");
+            }
+        }
+
+        private async Task ExecuteScriptedCommand(string commandName, string username, string channel, string fullMessage, ScriptingService scriptingService)
+        {
+            try
+            {
+                var commandArgs = fullMessage.Split(' ').Skip(1).ToArray();
+                var result = await scriptingService.ExecuteScriptedCommandAsync(channel, commandName, username, commandArgs);
+
+                if (result.Success && result.OutputMessages != null && result.OutputMessages.Any())
+                {
+                    // Enviar todos los mensajes de salida
+                    foreach (var message in result.OutputMessages)
+                    {
+                        if (!string.IsNullOrEmpty(message))
+                        {
+                            await _messageSender.SendMessageAsync(channel, message);
+                        }
+                    }
+                }
+                else if (!result.Success)
+                {
+                    _logger.LogWarning($"Error ejecutando script {commandName}: {result.ErrorMessage}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error ejecutando comando con script {commandName}");
+            }
+        }
+
+        private async Task ExecuteNormalCustomCommand(CustomCommand command, string username, string channel, string fullMessage)
+        {
+            try
+            {
+                var commandArgs = fullMessage.Split(' ').Skip(1).ToArray();
+                var processedResponse = await ProcessCustomFunctions(command.Response, channel, command.CommandName, username, commandArgs);
+                await _messageSender.SendMessageAsync(channel, processedResponse);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error ejecutando comando normal {command.CommandName}");
+                await _messageSender.SendMessageAsync(channel, "Error ejecutando comando.");
+            }
+        }
+
+        private async Task<string> ProcessCustomFunctions(string response, string channelName, string commandName, string username, string[] args)
+        {
+            if (string.IsNullOrEmpty(response)) return response;
+
+            try
+            {
+                var gameFunction = new GameFunction(_configuration);
+                var uptimeFunction = new UptimeFunction(_configuration);
+                var userFunction = new UserFunction(_configuration);
+
+                return await Utils.ProcessCustomFunctions(response, channelName, commandName, username, uptimeFunction, userFunction, gameFunction, args);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error procesando funciones personalizadas");
+                return response;
             }
         }
 
@@ -180,7 +292,7 @@ namespace Decatron.Services
         {
             try
             {
-                _logger.LogInformation($"Ejecutando micro comando !{commandName} por {username} en {channel}");
+                _logger.LogInformation($"Ejecutando micro comando {commandName} por {username} en {channel}");
 
                 var isBotEnabled = await Utils.IsBotEnabledForChannelAsync(_configuration, channel);
                 if (!isBotEnabled)
@@ -205,7 +317,7 @@ namespace Decatron.Services
                 var hasPermission = await GameUtils.HasPermissionToChangeCategoryAsync(_configuration, username, channel, _logger);
                 if (!hasPermission)
                 {
-                    await _messageSender.SendMessageAsync(channel, $"Solo los moderadores o el propietario del canal pueden usar !{commandName}.");
+                    await _messageSender.SendMessageAsync(channel, $"Solo los moderadores o el propietario del canal pueden usar {commandName}.");
                     return;
                 }
 
@@ -219,19 +331,19 @@ namespace Decatron.Services
                 var success = await GameUtils.UpdateCategoryAsync(_configuration, userInfo.TwitchId, categoryName, userInfo.AccessToken);
                 if (success)
                 {
-                    await _messageSender.SendMessageAsync(channel, $"¡Categoría cambiada a: {categoryName}! (usando !{commandName})");
+                    await _messageSender.SendMessageAsync(channel, $"¡Categoría cambiada a: {categoryName}! (usando {commandName})");
                     await GameUtils.SaveCategoryToHistoryAsync(_configuration, channel, categoryName, username);
-                    _logger.LogInformation($"Categoría cambiada por {username} en {channel} usando micro comando !{commandName}: {categoryName}");
+                    _logger.LogInformation($"Categoría cambiada por {username} en {channel} usando micro comando {commandName}: {categoryName}");
                 }
                 else
                 {
-                    await _messageSender.SendMessageAsync(channel, $"Error al cambiar la categoría usando !{commandName}.");
-                    _logger.LogWarning($"Error al cambiar categoría en {channel} por {username} con micro comando !{commandName}");
+                    await _messageSender.SendMessageAsync(channel, $"Error al cambiar la categoría usando {commandName}.");
+                    _logger.LogWarning($"Error al cambiar categoría en {channel} por {username} con micro comando {commandName}");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error procesando micro comando !{commandName} para {channel}");
+                _logger.LogError(ex, $"Error procesando micro comando {commandName} para {channel}");
                 await _messageSender.SendMessageAsync(channel, "Error al procesar el micro comando.");
             }
         }
@@ -270,10 +382,29 @@ namespace Decatron.Services
             }
         }
 
+        private async Task ProcessCreateCommand(string username, string channel, string chatMessage)
+        {
+            try
+            {
+                using var scope = _serviceScopeFactory.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<DecatronDbContext>();
+                var scriptingService = scope.ServiceProvider.GetRequiredService<ScriptingService>();
+
+                var createCommand = new Decatron.Custom.Commands.CreateCommand(dbContext, _configuration, scriptingService);
+                await createCommand.ExecuteAsync(username, channel, chatMessage, _messageSender);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error procesando comando !crear de {username} en {channel}");
+                await _messageSender.SendMessageAsync(channel, "Error procesando comando de creación.");
+            }
+        }
+
         public List<string> GetAvailableCommands()
         {
             var commands = _commands.Keys.ToList();
-            commands.Add("g"); // Agregar !g manualmente
+            commands.Add("!g"); // Agregar !g manualmente
+            commands.Add("!crear"); // Agregar !crear manualmente
             return commands;
         }
 

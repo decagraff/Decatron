@@ -13,7 +13,7 @@ namespace Decatron.Default.Commands
         private readonly ILogger<GameCommand> _logger;
         private readonly ICommandStateService _commandStateService;
 
-        public string Name => "game";
+        public string Name => "!game";
         public string Description => "Cambia o consulta la categoría/juego del stream";
 
         public GameCommand(IConfiguration configuration, ILogger<GameCommand> logger, ICommandStateService commandStateService)

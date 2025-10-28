@@ -1,6 +1,7 @@
 /* ============================================
    INDEX PAGE STYLES
    Landing Page - Estilos específicos
+   (Adaptado a la paleta de Base 1)
    ============================================ */
 
 /* Hero Section */
@@ -12,13 +13,15 @@
     min-height: calc(100vh - 80px);
     padding: 2rem;
     text-align: center;
-    background: linear-gradient(135deg, var(--bg-light), rgba(124, 58, 237, 0.05));
+    /* Usa el fondo claro y un degradado con el nuevo acento índigo */
+    background: linear-gradient(135deg, var(--bg-light), rgba(99, 102, 241, 0.05));
     position: relative;
     overflow: hidden;
 }
 
 body.dark-mode .hero {
-    background: linear-gradient(135deg, var(--bg-dark), rgba(124, 58, 237, 0.1));
+    /* Usa el fondo oscuro y el degradado de acento */
+    background: linear-gradient(135deg, var(--bg-dark), var(--color-accent-hover-bg));
 }
 
 /* Efecto de fondo animado (opcional) */
@@ -29,7 +32,7 @@ body.dark-mode .hero {
     right: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-accent-hover-bg) 0%, transparent 70%);
     animation: float 6s ease-in-out infinite;
     pointer-events: none;
 }
@@ -38,6 +41,7 @@ body.dark-mode .hero {
     0%, 100% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(30px);
     }
@@ -53,6 +57,7 @@ body.dark-mode .hero {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
+    /* El degradado de texto ya usa las variables de acento correctas */
     background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -103,12 +108,12 @@ body.dark-mode .features {
     margin-bottom: 4rem;
 }
 
-.section-header h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    color: var(--color-accent);
-}
+    .section-header h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: var(--color-accent);
+    }
 
 .section-subtitle {
     font-size: 1.1rem;
@@ -129,26 +134,31 @@ body.dark-mode .features {
     flex-direction: column;
     padding: 2rem;
     border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(124, 58, 237, 0.2);
+    /* Fondo blanco normal de la tarjeta (de Base 1) */
+    background-color: var(--card-bg-light);
+    /* Borde con el nuevo acento índigo */
+    border: 1px solid rgba(99, 102, 241, 0.2);
     transition: all 0.3s ease;
     cursor: default;
     opacity: 1;
 }
 
 body.dark-mode .feature-card {
-    background-color: rgba(25, 23, 54, 0.8);
-    border: 1px solid rgba(124, 58, 237, 0.3);
+    /* Fondo de tarjeta oscuro (de Base 1) con transparencia */
+    background-color: rgba(38, 38, 38, 0.8); /* Derivado de --card-bg-dark #262626 */
+    /* Borde oscuro con el nuevo acento índigo */
+    border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .feature-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+    /* Sombra con el nuevo acento índigo */
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
     border-color: var(--color-accent);
 }
 
 body.dark-mode .feature-card:hover {
-    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
 }
 
 .feature-icon {
@@ -186,6 +196,7 @@ body.dark-mode .feature-card h3 {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -195,13 +206,16 @@ body.dark-mode .feature-card h3 {
 /* CTA Section */
 .cta-section {
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
-    border-top: 1px solid rgba(124, 58, 237, 0.2);
-    border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+    /* Degradado con el nuevo acento índigo */
+    background: linear-gradient(135deg, var(--color-accent-hover-bg), rgba(99, 102, 241, 0.05));
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
 
 body.dark-mode .cta-section {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.08));
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0.08));
+    border-top-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
 }
 
 .cta-content {
@@ -223,12 +237,20 @@ body.dark-mode .cta-section {
     margin-bottom: 2rem;
 }
 
-/* Footer específico para Index */
+/* Footer específico para Index (Override) */
+/* Este footer es oscuro en ambos modos */
 .footer {
-    background-color: rgba(25, 23, 54, 0.95);
+    /* Usa el fondo de la barra de navegación oscura para consistencia */
+    background-color: var(--nav-bg-dark);
     color: var(--text-light);
     padding: 2rem;
     text-align: center;
+    border-top: 1px solid var(--border-dark); /* Borde oscuro */
+}
+
+body.dark-mode .footer {
+    /* Se asegura que siga siendo el mismo fondo oscuro */
+    background-color: var(--nav-bg-dark);
 }
 
 .footer-content {
@@ -236,11 +258,12 @@ body.dark-mode .cta-section {
     margin: 0 auto;
 }
 
-.footer-content p {
-    margin: 0.5rem 0;
-    opacity: 0.8;
-    font-size: 0.9rem;
-}
+    .footer-content p {
+        margin: 0.5rem 0;
+        opacity: 0.8;
+        font-size: 0.9rem;
+        color: var(--text-light); /* Asegura texto claro */
+    }
 
 .footer-subtitle {
     opacity: 0.6;
@@ -249,6 +272,7 @@ body.dark-mode .cta-section {
 
 /* ============================================
    RESPONSIVE DESIGN
+   (Sin cambios, es estructural)
    ============================================ */
 
 @media (max-width: 1024px) {
@@ -295,9 +319,9 @@ body.dark-mode .cta-section {
         margin-bottom: 2.5rem;
     }
 
-    .section-header h2 {
-        font-size: 1.8rem;
-    }
+        .section-header h2 {
+            font-size: 1.8rem;
+        }
 
     .section-subtitle {
         font-size: 1rem;
@@ -316,13 +340,13 @@ body.dark-mode .cta-section {
         padding: 2.5rem 1.5rem;
     }
 
-    .cta-section h2 {
-        font-size: 1.8rem;
-    }
+        .cta-section h2 {
+            font-size: 1.8rem;
+        }
 
-    .cta-section p {
-        font-size: 1rem;
-    }
+        .cta-section p {
+            font-size: 1rem;
+        }
 }
 
 @media (max-width: 480px) {
@@ -393,13 +417,13 @@ body.dark-mode .cta-section {
         padding: 2rem 1rem;
     }
 
-    .cta-section h2 {
-        font-size: 1.5rem;
-    }
+        .cta-section h2 {
+            font-size: 1.5rem;
+        }
 
-    .cta-section p {
-        font-size: 0.95rem;
-    }
+        .cta-section p {
+            font-size: 0.95rem;
+        }
 
     .footer {
         padding: 1.5rem 1rem;
@@ -419,6 +443,7 @@ body.dark-mode .cta-section {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
